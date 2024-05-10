@@ -67,44 +67,48 @@ namespace LepcsosMatrix
 
         private void szamitasButton_Click(object sender, EventArgs e)
         {
-            List<Control> del = new List<Control>();
-            foreach (Control i in Controls) { if (i is OutputMezo) { del.Add(i); } }
-            foreach (Control torold in del) { Controls.Remove(torold); }
-            del.Clear();
-            decimal[] mTomb = new decimal[nDb];
-            mLista.Clear();
-            outputMezoList.Clear();
-
-            // Input mezõ generálás
-            for (byte i = 0; i <= inputMezoList.Count; i++)
+            try
             {
-                if (i != 0 && i % nDb == 0)
+                List<Control> del = new List<Control>();
+                foreach (Control i in Controls) { if (i is OutputMezo) { del.Add(i); } }
+                foreach (Control torold in del) { Controls.Remove(torold); }
+                del.Clear();
+                decimal[] mTomb = new decimal[nDb];
+                mLista.Clear();
+                outputMezoList.Clear();
+
+                // Input mezõ generálás
+                for (byte i = 0; i <= inputMezoList.Count; i++)
                 {
-                    mLista.Add(mTomb);
-                    mTomb = new decimal[nDb];
+                    if (i != 0 && i % nDb == 0)
+                    {
+                        mLista.Add(mTomb);
+                        mTomb = new decimal[nDb];
+                    }
+                    if (i < inputMezoList.Count)
+                    {
+                        mTomb[i % nDb] = (Convert.ToDecimal(inputMezoList[i].Text.Replace(".", ",")));
+                    }
                 }
-                if (i < inputMezoList.Count)
+
+                VezetoElemAzonosito();
+
+                // Output mezõ generálás
+                for (byte i = 0; i < mDb; i++)
                 {
-                    mTomb[i % nDb] = (Convert.ToDecimal(inputMezoList[i].Text.Replace(".", ",")));
+                    for (byte j = 0; j < nDb; j++)
+                    {
+                        OutputMezo om = new OutputMezo();
+                        om.Left = inputMezoList[nDb - 1].Right + 20 + 62 * j;
+                        om.Top = 80 + 62 * i;
+                        if (mLista[i][j] == 0) { om.BackColor = Color.Lavender; }
+                        om.Text = (Math.Round(mLista[i][j], 3)).ToString();
+                        Controls.Add(om);
+                        outputMezoList.Add(om);
+                    }
                 }
             }
-
-            VezetoElemAzonosito();
-
-            // Output mezõ generálás
-            for (byte i = 0; i < mDb; i++)
-            {
-                for (byte j = 0; j < nDb; j++)
-                {
-                    OutputMezo om = new OutputMezo();
-                    om.Left = inputMezoList[nDb - 1].Right + 20 + 62 * j;
-                    om.Top = 80 + 62 * i;
-                    if (mLista[i][j] == 0) { om.BackColor = Color.Lavender; }
-                    om.Text = (Math.Round(mLista[i][j], 3)).ToString();
-                    Controls.Add(om);
-                    outputMezoList.Add(om);
-                }
-            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
 
@@ -162,6 +166,12 @@ namespace LepcsosMatrix
                     }
                 }
             }
+
+            for (int i = 0; i < elobbisor.Length; i++)
+            {
+                elobbisor[i] = elobbisor[i] * (-1);
+            }
+
             for (int i = 0; i < nDb; i++)
             {
                 mLista[utobbisorindex][i] = elobbisor[i];
@@ -225,18 +235,19 @@ namespace LepcsosMatrix
                 nMeretTextBox.Text = 3.ToString();
                 ujMatrixButton_Click(sender, e);
                 {
-                    inputMezoList[0].Text = "1";
-                    inputMezoList[1].Text = "2";
-                    inputMezoList[2].Text = "3";
+                    inputMezoList[0].Text = "2";
+                    inputMezoList[1].Text = "4";
+                    inputMezoList[2].Text = "1";
 
-                    inputMezoList[3].Text = "0";
-                    inputMezoList[4].Text = "3";
-                    inputMezoList[5].Text = "1";
+                    inputMezoList[3].Text = "4";
+                    inputMezoList[4].Text = "0";
+                    inputMezoList[5].Text = "2";
 
-                    inputMezoList[6].Text = "0";
+                    inputMezoList[6].Text = "1";
                     inputMezoList[7].Text = "3";
-                    inputMezoList[8].Text = "1";
+                    inputMezoList[8].Text = "0";
                 }
+                szamitasButton_Click(sender, e);
             }
             catch (Exception ex)
             {
@@ -264,6 +275,7 @@ namespace LepcsosMatrix
                     inputMezoList[7].Text = "2";
                     inputMezoList[8].Text = "2";
                 }
+                szamitasButton_Click(sender, e);
             }
             catch (Exception ex)
             {
@@ -271,7 +283,7 @@ namespace LepcsosMatrix
             }
         }
 
-        private void demo3_3x3Button_Click(object sender, EventArgs e)
+        private void random_3x3Button_Click(object sender, EventArgs e)
         {
             try
             {
@@ -280,8 +292,9 @@ namespace LepcsosMatrix
                 ujMatrixButton_Click(sender, e);
                 {
                     Random rnd = new Random();
-                    for (byte i = 0; i < 9; i++) { inputMezoList[i].Text = rnd.Next(0, 5).ToString(); }
+                    for (byte i = 0; i < inputMezoList.Count; i++) { inputMezoList[i].Text = rnd.Next(0, 9).ToString(); }
                 }
+                szamitasButton_Click(sender, e);
             }
             catch (Exception ex)
             {
@@ -321,6 +334,45 @@ namespace LepcsosMatrix
                     inputMezoList[18].Text = "4";
                     inputMezoList[19].Text = "1";
                 }
+                szamitasButton_Click(sender, e);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void random_4x4Button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                mMeretTextBox.Text = 4.ToString();
+                nMeretTextBox.Text = 4.ToString();
+                ujMatrixButton_Click(sender, e);
+                {
+                    Random rnd = new Random();
+                    for (byte i = 0; i < inputMezoList.Count; i++) { inputMezoList[i].Text = rnd.Next(0, 9).ToString(); }
+                }
+                szamitasButton_Click(sender, e);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void random_5x5Button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                mMeretTextBox.Text = 5.ToString();
+                nMeretTextBox.Text = 5.ToString();
+                ujMatrixButton_Click(sender, e);
+                {
+                    Random rnd = new Random();
+                    for (byte i = 0; i < inputMezoList.Count; i++) { inputMezoList[i].Text = rnd.Next(0, 9).ToString(); }
+                }
+                szamitasButton_Click(sender, e);
             }
             catch (Exception ex)
             {

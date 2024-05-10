@@ -39,8 +39,10 @@
             demo1_3x3Button = new Button();
             nevjegyButton = new Button();
             demo2_3x3Button = new Button();
-            demo3_3x3Button = new Button();
+            random_3x3Button = new Button();
             demo3_4x5Button = new Button();
+            random_4x4Button = new Button();
+            random_5x5Button = new Button();
             SuspendLayout();
             // 
             // matrixMereteLabel
@@ -105,7 +107,7 @@
             // elemszamLabel
             // 
             elemszamLabel.AutoSize = true;
-            elemszamLabel.Location = new Point(14, 203);
+            elemszamLabel.Location = new Point(12, 278);
             elemszamLabel.Name = "elemszamLabel";
             elemszamLabel.Size = new Size(63, 15);
             elemszamLabel.TabIndex = 902;
@@ -143,15 +145,15 @@
             demo2_3x3Button.UseVisualStyleBackColor = true;
             demo2_3x3Button.Click += demo2_3x3Button_Click;
             // 
-            // demo3_3x3Button
+            // random_3x3Button
             // 
-            demo3_3x3Button.Location = new Point(14, 167);
-            demo3_3x3Button.Name = "demo3_3x3Button";
-            demo3_3x3Button.Size = new Size(130, 23);
-            demo3_3x3Button.TabIndex = 11;
-            demo3_3x3Button.Text = "random - 3x3";
-            demo3_3x3Button.UseVisualStyleBackColor = true;
-            demo3_3x3Button.Click += demo3_3x3Button_Click;
+            random_3x3Button.Location = new Point(14, 183);
+            random_3x3Button.Name = "random_3x3Button";
+            random_3x3Button.Size = new Size(130, 23);
+            random_3x3Button.TabIndex = 11;
+            random_3x3Button.Text = "Random - 3x3";
+            random_3x3Button.UseVisualStyleBackColor = true;
+            random_3x3Button.Click += random_3x3Button_Click;
             // 
             // demo3_4x5Button
             // 
@@ -163,6 +165,26 @@
             demo3_4x5Button.UseVisualStyleBackColor = true;
             demo3_4x5Button.Click += demo3_4x5Button_Click;
             // 
+            // random_4x4Button
+            // 
+            random_4x4Button.Location = new Point(14, 212);
+            random_4x4Button.Name = "random_4x4Button";
+            random_4x4Button.Size = new Size(130, 23);
+            random_4x4Button.TabIndex = 904;
+            random_4x4Button.Text = "Random - 4x4";
+            random_4x4Button.UseVisualStyleBackColor = true;
+            random_4x4Button.Click += random_4x4Button_Click;
+            // 
+            // random_5x5Button
+            // 
+            random_5x5Button.Location = new Point(14, 241);
+            random_5x5Button.Name = "random_5x5Button";
+            random_5x5Button.Size = new Size(130, 23);
+            random_5x5Button.TabIndex = 905;
+            random_5x5Button.Text = "Random - 5x5";
+            random_5x5Button.UseVisualStyleBackColor = true;
+            random_5x5Button.Click += random_5x5Button_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -170,8 +192,10 @@
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(644, 461);
+            Controls.Add(random_5x5Button);
+            Controls.Add(random_4x4Button);
             Controls.Add(demo3_4x5Button);
-            Controls.Add(demo3_3x3Button);
+            Controls.Add(random_3x3Button);
             Controls.Add(demo2_3x3Button);
             Controls.Add(nevjegyButton);
             Controls.Add(demo1_3x3Button);
@@ -188,7 +212,7 @@
             MinimumSize = new Size(660, 500);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Lépcsős mátrix - v0.2 (Budapesti Corvinus Egyetem)";
+            Text = "Lépcsős mátrix - v0.3 (Budapesti Corvinus Egyetem)";
             Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -206,7 +230,9 @@
         private Button demo1_3x3Button;
         private Button nevjegyButton;
         private Button demo2_3x3Button;
-        private Button demo3_3x3Button;
+        private Button random_3x3Button;
         private Button demo3_4x5Button;
+        private Button random_4x4Button;
+        private Button random_5x5Button;
     }
 }
