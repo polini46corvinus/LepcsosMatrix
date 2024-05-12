@@ -49,14 +49,14 @@ namespace LepcsosMatrix
                         for (int j = 0; j < nDb; j++)
                         {
                             InputMezo im = new InputMezo();
-                            im.Left = 160 + 62 * j;
-                            im.Top = 80 + 42 * i;
+                            im.Left = demo1_3x3Button.Right + 20 + 62 * j;
+                            im.Top = demo1_3x3Button.Top + 42 * i;
                             Controls.Add(im);
                             inputMezoList.Add(im);
                         }
                     }
                     szamitasButton.Left = (inputMezoList[0].Left) - 1;
-                    szamitasButton.Top = 80 + mDb * 42;
+                    szamitasButton.Top = inputMezoList[^1].Bottom + 10;
                     szamitasButton.Visible = true;
                     elemszamLabel.Text = ("Elemszám: " + inputMezoList.Count()).ToString();
                     elemszamLabel.Visible = true;
@@ -100,9 +100,16 @@ namespace LepcsosMatrix
                     {
                         OutputMezo om = new OutputMezo();
                         om.Left = inputMezoList[nDb - 1].Right + 20 + 62 * j;
-                        om.Top = 80 + 62 * i;
-                        if (mLista[i][j] == 0) { om.BackColor = Color.Lavender; }
-                        om.Text = (Math.Round(mLista[i][j], 3)).ToString();
+                        om.Top = demo1_3x3Button.Top + 62 * i;
+                        if (Math.Abs(mLista[i][j]) < 0.001m)
+                        {
+                            om.BackColor = Color.Lavender;
+                            om.Text = Math.Round(mLista[i][j]).ToString();
+                        }
+                        else
+                        {
+                            om.Text = (Math.Round(mLista[i][j], 3)).ToString().TrimEnd('0').TrimEnd(',');
+                        }
                         Controls.Add(om);
                         outputMezoList.Add(om);
                     }

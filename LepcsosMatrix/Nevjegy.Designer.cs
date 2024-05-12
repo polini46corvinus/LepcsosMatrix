@@ -109,9 +109,9 @@
             label6.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label6.Location = new Point(12, 416);
             label6.Name = "label6";
-            label6.Size = new Size(113, 21);
+            label6.Size = new Size(195, 21);
             label6.TabIndex = 6;
-            label6.Text = "v0.3 - 2024.05.10.";
+            label6.Text = "v0.31 - 2024.05.12.";
             label6.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // pictureBox2

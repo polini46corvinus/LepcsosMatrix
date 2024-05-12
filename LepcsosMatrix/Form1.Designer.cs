@@ -212,7 +212,7 @@
             MinimumSize = new Size(660, 500);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Lépcsős mátrix - v0.3 (Budapesti Corvinus Egyetem)";
+            Text = "Lépcsős mátrix - v0.31 (Budapesti Corvinus Egyetem)";
             Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
