@@ -1,4 +1,6 @@
-# v0.31 - x64
+# v0.32 - x64
+
+UPDATE: Rangszámító feature
 
 Követelmények:
 - .NET Desktop Runtime 7.0.18 (x64)
