@@ -43,6 +43,7 @@
             demo3_4x5Button = new Button();
             random_4x4Button = new Button();
             random_5x5Button = new Button();
+            rangLabel = new Label();
             SuspendLayout();
             // 
             // matrixMereteLabel
@@ -107,7 +108,7 @@
             // elemszamLabel
             // 
             elemszamLabel.AutoSize = true;
-            elemszamLabel.Location = new Point(12, 278);
+            elemszamLabel.Location = new Point(12, 279);
             elemszamLabel.Name = "elemszamLabel";
             elemszamLabel.Size = new Size(63, 15);
             elemszamLabel.TabIndex = 902;
@@ -185,6 +186,16 @@
             random_5x5Button.UseVisualStyleBackColor = true;
             random_5x5Button.Click += random_5x5Button_Click;
             // 
+            // rangLabel
+            // 
+            rangLabel.AutoSize = true;
+            rangLabel.Location = new Point(12, 301);
+            rangLabel.Name = "rangLabel";
+            rangLabel.Size = new Size(37, 15);
+            rangLabel.TabIndex = 906;
+            rangLabel.Text = "Rang:";
+            rangLabel.Visible = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -192,6 +203,7 @@
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(644, 461);
+            Controls.Add(rangLabel);
             Controls.Add(random_5x5Button);
             Controls.Add(random_4x4Button);
             Controls.Add(demo3_4x5Button);
@@ -234,5 +246,6 @@
         private Button demo3_4x5Button;
         private Button random_4x4Button;
         private Button random_5x5Button;
+        private Label rangLabel;
     }
 }

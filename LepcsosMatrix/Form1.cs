@@ -14,6 +14,7 @@ namespace LepcsosMatrix
 
         byte mDb = 0; // m = sor
         byte nDb = 0; // n = oszlop
+        int rang = new byte();
 
         public Form1() { InitializeComponent(); }
         private void Form1_Load(object sender, EventArgs e) { }
@@ -22,6 +23,7 @@ namespace LepcsosMatrix
             //Törlés, üres lista beállítás
             szamitasButton.Visible = false;
             elemszamLabel.Visible = false;
+            rangLabel.Visible = false;
             try
             {
                 List<Control> del = new List<Control>();
@@ -92,6 +94,7 @@ namespace LepcsosMatrix
                 }
 
                 VezetoElemAzonosito();
+                RangSzamito();
 
                 // Output mezõ generálás
                 for (byte i = 0; i < mDb; i++)
@@ -104,12 +107,8 @@ namespace LepcsosMatrix
                         if (Math.Abs(mLista[i][j]) < 0.001m)
                         {
                             om.BackColor = Color.Lavender;
-                            om.Text = Math.Round(mLista[i][j]).ToString();
                         }
-                        else
-                        {
-                            om.Text = (Math.Round(mLista[i][j], 3)).ToString().TrimEnd('0').TrimEnd(',');
-                        }
+                        om.Text = Convert.ToDouble(Math.Round(mLista[i][j], 3)).ToString();
                         Controls.Add(om);
                         outputMezoList.Add(om);
                     }
@@ -226,8 +225,39 @@ namespace LepcsosMatrix
                 }
                 VezetoElemAzonosito();
             }
+        }
+
+        private void RangSzamito()
+        {
+            rang = mLista.Count();
+            bool ures = false;
+            byte uressorok = 0;
+            for (byte i = 0; i < mDb;i++)
+            {
+                for (byte j = 0; j < nDb;j++)
+                {
+                    if (Math.Abs(mLista[i][j]) > 0.01m)
+                    {
+                        ures = false;
+                        break;
+                    }
+                    else
+                    {
+                        ures = true;
+                    }
+                }
+                if (ures == true)
+                {
+                    uressorok++;
+                    ures = false;
+                }
+            }
+
+            rangLabel.Text = "Rang: "+(rang-uressorok).ToString();
+            rangLabel.Visible = true;
 
         }
+
         private void nevjegyButton_Click(object sender, EventArgs e)
         {
             Nevjegy nevjegy = new Nevjegy();
