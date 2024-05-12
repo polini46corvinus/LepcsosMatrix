@@ -45,6 +45,7 @@
             random_5x5Button = new Button();
             rangLabel = new Label();
             lepesenkentCheckBox = new CheckBox();
+            determinansLabel = new Label();
             SuspendLayout();
             // 
             // matrixMereteLabel
@@ -109,7 +110,7 @@
             // elemszamLabel
             // 
             elemszamLabel.AutoSize = true;
-            elemszamLabel.Location = new Point(12, 298);
+            elemszamLabel.Location = new Point(14, 302);
             elemszamLabel.Name = "elemszamLabel";
             elemszamLabel.Size = new Size(63, 15);
             elemszamLabel.TabIndex = 902;
@@ -190,7 +191,7 @@
             // rangLabel
             // 
             rangLabel.AutoSize = true;
-            rangLabel.Location = new Point(12, 320);
+            rangLabel.Location = new Point(14, 322);
             rangLabel.Name = "rangLabel";
             rangLabel.Size = new Size(37, 15);
             rangLabel.TabIndex = 906;
@@ -200,12 +201,22 @@
             // lepesenkentCheckBox
             // 
             lepesenkentCheckBox.AutoSize = true;
-            lepesenkentCheckBox.Location = new Point(14, 276);
+            lepesenkentCheckBox.Location = new Point(14, 278);
             lepesenkentCheckBox.Name = "lepesenkentCheckBox";
             lepesenkentCheckBox.Size = new Size(92, 19);
             lepesenkentCheckBox.TabIndex = 908;
             lepesenkentCheckBox.Text = "Lépésenként";
             lepesenkentCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // determinansLabel
+            // 
+            determinansLabel.AutoSize = true;
+            determinansLabel.Location = new Point(14, 342);
+            determinansLabel.Name = "determinansLabel";
+            determinansLabel.Size = new Size(136, 15);
+            determinansLabel.TabIndex = 909;
+            determinansLabel.Text = "Determináns: nem n x n!";
+            determinansLabel.Visible = false;
             // 
             // Form1
             // 
@@ -214,6 +225,7 @@
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(644, 461);
+            Controls.Add(determinansLabel);
             Controls.Add(lepesenkentCheckBox);
             Controls.Add(rangLabel);
             Controls.Add(random_5x5Button);
@@ -235,7 +247,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(660, 500);
             Name = "Form1";
-            Text = "Lépcsős mátrix - v0.33 (Budapesti Corvinus Egyetem)";
+            Text = "Lépcsős mátrix - v0.4 (Budapesti Corvinus Egyetem)";
             Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -259,5 +271,6 @@
         private Button random_5x5Button;
         private Label rangLabel;
         private CheckBox lepesenkentCheckBox;
+        private Label determinansLabel;
     }
 }

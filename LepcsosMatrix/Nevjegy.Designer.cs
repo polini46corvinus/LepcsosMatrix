@@ -111,7 +111,7 @@
             label6.Name = "label6";
             label6.Size = new Size(195, 21);
             label6.TabIndex = 6;
-            label6.Text = "v0.33 - 2024.05.12.";
+            label6.Text = "v0.4 - 2024.05.12.";
             label6.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // pictureBox2

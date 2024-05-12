@@ -24,6 +24,7 @@ namespace LepcsosMatrix
             szamitasButton.Visible = false;
             elemszamLabel.Visible = false;
             rangLabel.Visible = false;
+            determinansLabel.Visible = false;
             try
             {
                 List<Control> del = new List<Control>();
@@ -95,7 +96,7 @@ namespace LepcsosMatrix
 
                 VezetoElemAzonosito();
                 RangSzamito();
-
+                Determinans();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -170,7 +171,7 @@ namespace LepcsosMatrix
                 MessageBox.Show("Sorcsere");
                 Output();
             }
-                
+
             VezetoElemAzonosito();
         }
 
@@ -210,7 +211,7 @@ namespace LepcsosMatrix
                 }
                 if (lepesenkentCheckBox.Checked)
                 {
-                    MessageBox.Show($"Kivonás: ({Math.Round(szorzo,3)} * )");
+                    MessageBox.Show($"Kivonás: ({Math.Round(szorzo, 3)} * )");
                     Output();
                 }
                 VezetoElemAzonosito();
@@ -222,9 +223,9 @@ namespace LepcsosMatrix
             rang = mLista.Count();
             bool ures = false;
             byte uressorok = 0;
-            for (byte i = 0; i < mDb;i++)
+            for (byte i = 0; i < mDb; i++)
             {
-                for (byte j = 0; j < nDb;j++)
+                for (byte j = 0; j < nDb; j++)
                 {
                     if (Math.Abs(mLista[i][j]) > 0.01m)
                     {
@@ -242,7 +243,7 @@ namespace LepcsosMatrix
                     ures = false;
                 }
             }
-            rangLabel.Text = "Rang: "+(rang-uressorok).ToString();
+            rangLabel.Text = "Rang: " + (rang - uressorok).ToString();
             rangLabel.Visible = true;
             Output();
         }
@@ -275,6 +276,21 @@ namespace LepcsosMatrix
                     outputMezoList.Add(om);
                 }
             }
+        }
+
+        private void Determinans()
+        {
+            double det = Convert.ToDouble(mLista[0][0]);
+            if (mDb == nDb)
+            {
+                for (int i = 1; i < nDb; i++)
+                {
+                    det *= Convert.ToDouble(mLista[i][i]);
+                }
+                determinansLabel.Text = ($"Determináns: {Math.Round(det,3)}").ToString();
+            }
+            else { determinansLabel.Text = "Determináns: nem n x n!";}
+            determinansLabel.Visible = true;
         }
 
         private void nevjegyButton_Click(object sender, EventArgs e)
