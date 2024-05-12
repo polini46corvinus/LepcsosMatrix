@@ -96,23 +96,6 @@ namespace LepcsosMatrix
                 VezetoElemAzonosito();
                 RangSzamito();
 
-                // Output mezõ generálás
-                for (byte i = 0; i < mDb; i++)
-                {
-                    for (byte j = 0; j < nDb; j++)
-                    {
-                        OutputMezo om = new OutputMezo();
-                        om.Left = inputMezoList[nDb - 1].Right + 20 + 62 * j;
-                        om.Top = demo1_3x3Button.Top + 62 * i;
-                        if (Math.Abs(mLista[i][j]) < 0.001m)
-                        {
-                            om.BackColor = Color.Lavender;
-                        }
-                        om.Text = Convert.ToDouble(Math.Round(mLista[i][j], 3)).ToString();
-                        Controls.Add(om);
-                        outputMezoList.Add(om);
-                    }
-                }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -136,7 +119,6 @@ namespace LepcsosMatrix
             }
             SortCheck(vezetoElemIndex);
         }
-
 
         private void SortCheck(byte[] vezetoelem)
         {
@@ -183,15 +165,18 @@ namespace LepcsosMatrix
                 mLista[utobbisorindex][i] = elobbisor[i];
                 mLista[elobbisorindex][i] = utobbisor[i];
             }
-
+            if (lepesenkentCheckBox.Checked)
+            {
+                MessageBox.Show("Sorcsere");
+                Output();
+            }
+                
             VezetoElemAzonosito();
         }
 
         private void Kivonas(byte[] vezetoelem)
         {
             //MessageBox.Show("kivonás");
-
-
             bool voltkivonas = false;
             decimal szorzo = new decimal();
             int elobbisorindex = new int();
@@ -223,6 +208,11 @@ namespace LepcsosMatrix
                 {
                     mLista[utobbisorindex][i] -= Math.Round(elobbisor[i] * szorzo, 10);
                 }
+                if (lepesenkentCheckBox.Checked)
+                {
+                    MessageBox.Show($"Kivonás: ({Math.Round(szorzo,3)} * )");
+                    Output();
+                }
                 VezetoElemAzonosito();
             }
         }
@@ -252,10 +242,39 @@ namespace LepcsosMatrix
                     ures = false;
                 }
             }
-
             rangLabel.Text = "Rang: "+(rang-uressorok).ToString();
             rangLabel.Visible = true;
+            Output();
+        }
 
+        private void Output()
+        {
+            List<Control> del = new List<Control>();
+            foreach (Control i in Controls) { if (i is OutputMezo) { del.Add(i); } }
+            foreach (Control torold in del) { Controls.Remove(torold); }
+            del.Clear();
+
+            // Output mezõ generálás
+            for (byte i = 0; i < mDb; i++)
+            {
+                for (byte j = 0; j < nDb; j++)
+                {
+                    OutputMezo om = new OutputMezo();
+                    om.Left = inputMezoList[nDb - 1].Right + 20 + 62 * j;
+                    om.Top = demo1_3x3Button.Top + 62 * i;
+                    if (Math.Abs(mLista[i][j]) < 0.001m)
+                    {
+                        om.BackColor = Color.Lavender;
+                        om.Text = Convert.ToDouble(0).ToString();
+                    }
+                    else
+                    {
+                        om.Text = Convert.ToDouble(Math.Round(mLista[i][j], 3)).ToString();
+                    }
+                    Controls.Add(om);
+                    outputMezoList.Add(om);
+                }
+            }
         }
 
         private void nevjegyButton_Click(object sender, EventArgs e)
