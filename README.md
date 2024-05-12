@@ -1,6 +1,6 @@
 # v0.33 - x64
 
-v0.33 UPDATE: Lépésenként gomb feature
+v0.33 UPDATE: Lépésenként gomb feature\
 v0.32 UPDATE: Rangszámító feature
 
 Követelmények:
