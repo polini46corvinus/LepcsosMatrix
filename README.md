@@ -1,4 +1,7 @@
-# v0.3
+# v0.31 - x64
 
-![image](https://github.com/polini46corvinus/LepcsosMatrix/assets/160756175/54558a13-4315-4cbd-935f-6c716fe82b96)
-![image](https://github.com/polini46corvinus/LepcsosMatrix/assets/160756175/bcf0931d-984c-4188-b470-3b6ec8994927)
+Követelmények:
+- .NET Desktop Runtime 7.0.18 (x64)
+- .NET Framework 4.7.2
+
+![image](https://github.com/polini46corvinus/LepcsosMatrix/assets/160756175/3d2536ab-3327-4f7d-a796-a8cdae7e2529)
