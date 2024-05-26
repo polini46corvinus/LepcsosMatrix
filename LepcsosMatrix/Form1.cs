@@ -1,3 +1,5 @@
+Ôªøusing MaterialSkin;
+using MaterialSkin.Controls;
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Data;
@@ -6,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace LepcsosMatrix
 {
-    public partial class Form1 : Form
+    public partial class Form1 : MaterialForm
     {
         List<InputMezo> inputMezoList = new List<InputMezo>();
         List<OutputMezo> outputMezoList = new List<OutputMezo>();
@@ -14,17 +16,28 @@ namespace LepcsosMatrix
 
         byte mDb = 0; // m = sor
         byte nDb = 0; // n = oszlop
-        int rang = new byte();
+        byte rang = new byte();
 
-        public Form1() { InitializeComponent(); }
+        public Form1()
+        {
+            InitializeComponent();
+
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.Indigo600, Primary.Indigo800,
+                Primary.Blue300, Accent.Indigo200, TextShade.WHITE);
+        }
         private void Form1_Load(object sender, EventArgs e) { }
         private void ujMatrixButton_Click(object sender, EventArgs e)
         {
-            //TˆrlÈs, ¸res lista be·llÌt·s
+            //T√∂rl√©s, √ºres lista be√°ll√≠t√°s
             szamitasButton.Visible = false;
             elemszamLabel.Visible = false;
             rangLabel.Visible = false;
+            fuggetlenLabel.Visible = false;
             determinansLabel.Visible = false;
+            materialCard3.Visible = false;
             try
             {
                 List<Control> del = new List<Control>();
@@ -35,37 +48,36 @@ namespace LepcsosMatrix
                 mLista.Clear();
                 del.Clear();
 
-
                 bool hiba = false;
 
                 mDb = Convert.ToByte(mMeretTextBox.Text);
                 nDb = Convert.ToByte(nMeretTextBox.Text);
                 if (mDb < 2 || nDb < 2)
-                { MessageBox.Show("Minim·lis mÈret: 2x2"); hiba = true; };
+                { MessageBox.Show("Minim√°lis m√©ret: 2x2"); hiba = true; };
                 if (mDb > 12 || nDb > 12)
-                { MessageBox.Show("Maxim·lis mÈret: 12x12"); hiba = true; };
+                { MessageBox.Show("Maxim√°lis m√©ret: 12x12"); hiba = true; };
 
                 if (hiba == false)
                 {
-                    for (int i = 0; i < mDb; i++)
+                    for (byte i = 0; i < mDb; i++)
                     {
-                        for (int j = 0; j < nDb; j++)
+                        for (byte j = 0; j < nDb; j++)
                         {
                             InputMezo im = new InputMezo();
-                            im.Left = demo1_3x3Button.Right + 20 + 62 * j;
-                            im.Top = demo1_3x3Button.Top + 42 * i;
+                            im.Left = 240 + 52 * j;
+                            im.Top = 215 + 52 * i;
                             Controls.Add(im);
                             inputMezoList.Add(im);
                         }
                     }
-                    szamitasButton.Left = (inputMezoList[0].Left) - 1;
+                    szamitasButton.Left = inputMezoList[0].Left + 3;
                     szamitasButton.Top = inputMezoList[^1].Bottom + 10;
                     szamitasButton.Visible = true;
-                    elemszamLabel.Text = ("Elemsz·m: " + inputMezoList.Count()).ToString();
+                    elemszamLabel.Text = ("Elemsz√°m: " + inputMezoList.Count()).ToString();
                     elemszamLabel.Visible = true;
                 }
             }
-            catch (Exception ex) { MessageBox.Show("Beviteli hiba a m·trix lÈtrehoz·sakor!\n\n" + ex.Message, "Hiba"); }
+            catch (Exception ex) { MessageBox.Show("Beviteli hiba a m√°trix l√©trehoz√°sakor!\n\n" + ex.Message, "Hiba"); }
         }
 
         private void szamitasButton_Click(object sender, EventArgs e)
@@ -73,14 +85,14 @@ namespace LepcsosMatrix
             try
             {
                 List<Control> del = new List<Control>();
-                foreach (Control i in Controls) { if (i is OutputMezo) { del.Add(i); } }
-                foreach (Control torold in del) { Controls.Remove(torold); }
+                foreach (Control i in materialCard3.Controls) { if (i is OutputMezo) { del.Add(i); } }
+                foreach (Control torold in del) { materialCard3.Controls.Remove(torold); }
                 del.Clear();
                 decimal[] mTomb = new decimal[nDb];
                 mLista.Clear();
                 outputMezoList.Clear();
 
-                // Input mezı gener·l·s
+                // Input mez√µ gener√°l√°s
                 for (byte i = 0; i <= inputMezoList.Count; i++)
                 {
                     if (i != 0 && i % nDb == 0)
@@ -129,7 +141,7 @@ namespace LepcsosMatrix
             Array.Sort(sorted_vezetoelem);
             if (Enumerable.SequenceEqual<byte>(vezetoelem, sorted_vezetoelem) == false)
             {
-                //MessageBox.Show("sort cserÈlek");
+                //MessageBox.Show("sort cser√©lek");
                 SorCsere(vezetoelem);
             }
             else { Kivonas(vezetoelem); }
@@ -139,29 +151,29 @@ namespace LepcsosMatrix
         {
             decimal[] elobbisor = new decimal[nDb];
             decimal[] utobbisor = new decimal[nDb];
-            int elobbisorindex = new int();
-            int utobbisorindex = new int();
+            byte elobbisorindex = new byte();
+            byte utobbisorindex = new byte();
             for (byte i = 1; i < mDb; i++)
             {
                 if (vezetoelem[i] < vezetoelem[i - 1])
                 {
-                    elobbisorindex = i - 1;
+                    elobbisorindex = (byte)(i - 1);
                     utobbisorindex = i;
 
                     for (byte j = 0; j < nDb; j++)
                     {
                         utobbisor[j] = mLista[i][j];
-                        elobbisor[j] = mLista[i - 1][j]; // a kutyaf·j·t ez megszivatott ·m
+                        elobbisor[j] = mLista[i - 1][j]; // a kutyaf√°j√°t ez megszivatott √°m
                     }
                 }
             }
 
-            for (int i = 0; i < elobbisor.Length; i++)
+            for (byte i = 0; i < elobbisor.Length; i++)
             {
                 elobbisor[i] = elobbisor[i] * (-1);
             }
 
-            for (int i = 0; i < nDb; i++)
+            for (byte i = 0; i < nDb; i++)
             {
                 mLista[utobbisorindex][i] = elobbisor[i];
                 mLista[elobbisorindex][i] = utobbisor[i];
@@ -177,17 +189,17 @@ namespace LepcsosMatrix
 
         private void Kivonas(byte[] vezetoelem)
         {
-            //MessageBox.Show("kivon·s");
+            //MessageBox.Show("kivon√°s");
             bool voltkivonas = false;
             decimal szorzo = new decimal();
-            int elobbisorindex = new int();
-            int utobbisorindex = new int();
+            byte elobbisorindex = new byte();
+            byte utobbisorindex = new byte();
 
             for (byte i = 1; i < mDb; i++)
             {
                 if (vezetoelem[i] == vezetoelem[i - 1] && vezetoelem[i] != 255)
                 {
-                    elobbisorindex = i - 1;
+                    elobbisorindex = (byte)(i - 1);
                     utobbisorindex = i;
                     szorzo = mLista[i][vezetoelem[i]] / mLista[i - 1][vezetoelem[i]];
                     voltkivonas = true;
@@ -205,13 +217,13 @@ namespace LepcsosMatrix
                     utobbisor[i] = mLista[utobbisorindex][i];
                 }
 
-                for (int i = 0; i < nDb; i++)
+                for (byte i = 0; i < nDb; i++)
                 {
                     mLista[utobbisorindex][i] -= Math.Round(elobbisor[i] * szorzo, 10);
                 }
                 if (lepesenkentCheckBox.Checked)
                 {
-                    MessageBox.Show($"Kivon·s: ({Math.Round(szorzo, 3)} * )");
+                    MessageBox.Show($"Kivon√°s: ({Math.Round(szorzo, 3)} * )");
                     Output();
                 }
                 VezetoElemAzonosito();
@@ -220,7 +232,7 @@ namespace LepcsosMatrix
 
         private void RangSzamito()
         {
-            rang = mLista.Count();
+            rang = (byte)mLista.Count();
             bool ures = false;
             byte uressorok = 0;
             for (byte i = 0; i < mDb; i++)
@@ -245,37 +257,43 @@ namespace LepcsosMatrix
             }
             rangLabel.Text = "Rang: " + (rang - uressorok).ToString();
             rangLabel.Visible = true;
+            if (rang-uressorok<mDb) { fuggetlenLabel.Text = "Lin. f√ºgg≈ë";}
+            else { fuggetlenLabel.Text = "Lin. f√ºggetlen"; }
+            fuggetlenLabel.Visible = true;
             Output();
         }
 
         private void Output()
         {
             List<Control> del = new List<Control>();
-            foreach (Control i in Controls) { if (i is OutputMezo) { del.Add(i); } }
-            foreach (Control torold in del) { Controls.Remove(torold); }
+            foreach (Control i in materialCard3.Controls) { if (i is OutputMezo) { del.Add(i); } }
+            foreach (Control torold in del) { materialCard3.Controls.Remove(torold); }
             del.Clear();
 
-            // Output mezı gener·l·s
+            // Output mez√µ gener√°l√°s
             for (byte i = 0; i < mDb; i++)
             {
                 for (byte j = 0; j < nDb; j++)
                 {
                     OutputMezo om = new OutputMezo();
-                    om.Left = inputMezoList[nDb - 1].Right + 20 + 62 * j;
-                    om.Top = demo1_3x3Button.Top + 62 * i;
+                    om.Left = 20 + 62 * j;
+                    om.Top = 62 * i;
                     if (Math.Abs(mLista[i][j]) < 0.001m)
                     {
-                        om.BackColor = Color.Lavender;
+                        om.HighEmphasis = true;
                         om.Text = Convert.ToDouble(0).ToString();
                     }
                     else
                     {
                         om.Text = Convert.ToDouble(Math.Round(mLista[i][j], 3)).ToString();
+                        om.HighEmphasis = false;
                     }
-                    Controls.Add(om);
+                    materialCard3.Left = inputMezoList[nDb - 1].Right + 20;
+                    materialCard3.Controls.Add(om);
                     outputMezoList.Add(om);
                 }
             }
+            materialCard3.Visible = true;
         }
 
         private void Determinans()
@@ -283,13 +301,21 @@ namespace LepcsosMatrix
             double det = Convert.ToDouble(mLista[0][0]);
             if (mDb == nDb)
             {
-                for (int i = 1; i < nDb; i++)
+                for (byte i = 1; i < nDb; i++)
                 {
                     det *= Convert.ToDouble(mLista[i][i]);
                 }
-                determinansLabel.Text = ($"Determin·ns: {Math.Round(det,3)}").ToString();
+                if (Math.Abs(det) < 0.001)
+                {
+                    determinansLabel.Text = "Determin√°ns: 0";
+                }
+                else
+                {
+                    determinansLabel.Text = ($"Determin√°ns: {Math.Round(det, 3)}").ToString();
+                }
+                
             }
-            else { determinansLabel.Text = "Determin·ns: nem n x n!";}
+            else { determinansLabel.Text = "Determin√°ns: nem n x n!"; }
             determinansLabel.Visible = true;
         }
 
@@ -364,7 +390,7 @@ namespace LepcsosMatrix
                 ujMatrixButton_Click(sender, e);
                 {
                     Random rnd = new Random();
-                    for (byte i = 0; i < inputMezoList.Count; i++) { inputMezoList[i].Text = rnd.Next(0, 9).ToString(); }
+                    for (byte i = 0; i < inputMezoList.Count; i++) { inputMezoList[i].Text = rnd.Next(0, 10).ToString(); }
                 }
                 szamitasButton_Click(sender, e);
             }
@@ -423,7 +449,7 @@ namespace LepcsosMatrix
                 ujMatrixButton_Click(sender, e);
                 {
                     Random rnd = new Random();
-                    for (byte i = 0; i < inputMezoList.Count; i++) { inputMezoList[i].Text = rnd.Next(0, 9).ToString(); }
+                    for (byte i = 0; i < inputMezoList.Count; i++) { inputMezoList[i].Text = rnd.Next(0, 10).ToString(); }
                 }
                 szamitasButton_Click(sender, e);
             }
@@ -442,7 +468,7 @@ namespace LepcsosMatrix
                 ujMatrixButton_Click(sender, e);
                 {
                     Random rnd = new Random();
-                    for (byte i = 0; i < inputMezoList.Count; i++) { inputMezoList[i].Text = rnd.Next(0, 9).ToString(); }
+                    for (byte i = 0; i < inputMezoList.Count; i++) { inputMezoList[i].Text = rnd.Next(0, 10).ToString(); }
                 }
                 szamitasButton_Click(sender, e);
             }
